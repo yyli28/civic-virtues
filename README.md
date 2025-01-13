@@ -1,4 +1,4 @@
 # civic-virtues
-# Data description
+## Data description
 The data is collected for my **master's thesis**. My thesis 
-
+## Planned Project Overview
