@@ -1,0 +1,80 @@
+---
+title: "Exploring Civic Virtues among International Students"
+author:
+  - name: Yangyue Li
+    corresponding: true
+    email: yangyueli28@uchicago.edu
+    affiliations:
+      - id: id1
+        name: "University of Chicago"
+#        group: Developmental Psychology Program
+        department: MA Program in the Social Sciences
+        address: "1155 E 60th St."
+        city: Chicago
+        region: IL
+        country: USA
+        postal-code: 60637
+abstract: "This document is a template demonstrating the apaquarto format. It includes examples of how to create figures and tables, as well as how to reference them in the text. The document is written in Quarto, a system for creating documents with R Markdown. The apaquarto extension provides a template for creating APA7-formatted manuscripts."
+# separated by commmas (e.g., [reliability, validity, generalizability])
+keywords: [civic virtues, empathy, wisdom]
+# If true, tables and figures are mingled with the text instead of listed at the end of the document.
+floatsintext: true
+# Numbered lines (.pdf and .docx only)
+numbered-lines: false
+# File with references
+bibliography: bibliography.bib
+# Suppress title page
+suppress-title-page: false
+# Link citations to references
+link-citations: true
+# If true, adds today's date below author affiliations. If text, can be any value.
+# This is not standard APA format, but it is convenient.
+# Works with docx, html, and typst. 
+draft-date: false
+# Language options. See https://quarto.org/docs/authoring/language.html
+lang: en
+language:
+  citation-last-author-separator: "and"
+  citation-masked-author: "Masked Citation"
+  citation-masked-date: "n.d."
+  citation-masked-title: "Masked Title"
+  email: "Email"
+  title-block-author-note: "Author Note"
+  title-block-correspondence-note: "Correspondence concerning this article should be addressed to"
+  title-block-role-introduction: "Author roles were classified using the Contributor Role Taxonomy (CRediT; https://credit.niso.org/) as follows:"
+  title-impact-statement: "Impact Statement"
+  references-meta-analysis: "References marked with an asterisk indicate studies included in the meta-analysis."
+format:
+  apaquarto-docx: default
+  apaquarto-html: default
+  apaquarto-typst: 
+    keep-typ: true
+    list-of-figures: true
+    list-of-tables: true
+    toc: true
+  apaquarto-pdf:
+    # Can be jou (journal), man (manuscript), stu (student), or doc (document)
+    documentmode: man
+    keep-tex: true
+    # You can turn these off for a simple document
+    # But you probably want them for a thesis or chapter
+    list-of-figures: true
+    list-of-tables: true
+    # Change default output size of figures unless specified in the chunk
+    fig-width: 2
+    fig-height: 2
+    out-width: 40%
+---
+
+```{r, include = FALSE}
+#| label: setup
+#| include: false
+
+library(conflicted)
+library(tidyverse)
+library(flextable)
+library(ftExtra)
+library(knitr)
+conflicts_prefer(dplyr::filter, .quiet = TRUE)
+conflicts_prefer(flextable::separate_header, .quiet = TRUE)
+```

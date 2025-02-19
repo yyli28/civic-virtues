@@ -1,3 +1,10 @@
+# Ignore compiled documents
+*.docx
+*.html
+
+# Ignore datasets and large files
+*.csv
+
 # History files
 .Rhistory
 .Rapp.history
@@ -47,3 +54,12 @@ po/*~
 
 # RStudio Connect folder
 rsconnect/
+
+# Ignore a dedicated directory
+localonly/
+# Ignore specific file types
+*.log
+# Ignore one specific file not in an ignored folder or filetype
+example_file_to_ignore.txt
+
+
