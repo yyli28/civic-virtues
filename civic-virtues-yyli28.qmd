@@ -1,5 +1,5 @@
 ---
-title: "Exploring Civic Virtues among International Students"
+title: "The relationship between international study and civic virtues"
 author:
   - name: Yangyue Li
     corresponding: true
@@ -14,9 +14,8 @@ author:
         region: IL
         country: USA
         postal-code: 60637
-abstract: "This document is a template demonstrating the apaquarto format. It includes examples of how to create figures and tables, as well as how to reference them in the text. The document is written in Quarto, a system for creating documents with R Markdown. The apaquarto extension provides a template for creating APA7-formatted manuscripts."
-# separated by commmas (e.g., [reliability, validity, generalizability])
-keywords: [civic virtues, empathy, wisdom]
+abstract: Not ready
+keywords: [civic virtues, empathy, wisdom, civility]
 # If true, tables and figures are mingled with the text instead of listed at the end of the document.
 floatsintext: true
 # Numbered lines (.pdf and .docx only)
@@ -47,6 +46,7 @@ language:
 format:
   apaquarto-docx: default
   apaquarto-html: default
+  apaquarto-pdf: default
   apaquarto-typst: 
     keep-typ: true
     list-of-figures: true
@@ -78,3 +78,136 @@ library(knitr)
 conflicts_prefer(dplyr::filter, .quiet = TRUE)
 conflicts_prefer(flextable::separate_header, .quiet = TRUE)
 ```
+
+In an interconnected world, civic virtues are crucial for fostering responsible citizenship and encouraging individuals to prioritize societal well-being over self-interest (Sherrod et al., 2002). U.S. universities, as diverse microcosms, bring domestic and international students together, offering unique contexts for civic engagement and understanding the values of others. Domestic American students may develop civic engagement through strong ties to their local communities and the American education system, while international students may bring perspectives shaped by cross-cultural experiences and adaptation to a new cultural environment. Undergoing the same admission process and sharing similar college life on campus with their American peers, international students may still differ in civic behaviors. These contexts raise critical questions about the factors that foster civic virtues and motivate individuals to engage in civic-minded behaviors. How do experiences in a foreign and culturally different environment influence civic virtues and related psychological characteristics such as empathy and cultural competence? Do international students differ on these psychological aspects from US students?
+
+## Literature Review
+
+### Education and Civic Virtues
+
+Civic engagement may foster a sense of belonging, purpose, and responsibility within a community, and may empower individuals to contribute to a common good (Flanagan & Levine, 2010). Research suggests that civic education - educational experiences that are directed at increasing civic virtues - happens mostly during adolescence, but can continue into young adulthood (Flanagan & Levine, 2010; Sherrod et al., 2002). Much of this experience occurs in educational settings, particularly colleges, which offer structured opportunities through coursework, extracurricular activities, community service programs, and student organizations (Flanagan & Levine, 2010). These experiences could help young adults develop civic virtues and social responsibility.
+
+Besides formal instruction in character education and civility (Jeynes, 2019; Torney-Purta, 2002), non-didactic and informal experiences have important implications for the development of civic virtues as well. Indeed, research highlights that youths who are involved in community-based organizations or extracurricular activities are more likely to be civically active (Zarrett et al., 2021). Furthermore, a study suggests that participating in community service or volunteering is associated with adolescent civic beliefs about considering similar types of civic engagement behaviors (Metzger et al., 2019). Similarly, Vazina & Poulin (2019) found that prosocial/community-based activities are related to a greater likelihood of being in the high-sustained civic engagement trajectory.
+
+Additionally, recent research suggests that study abroad programs may increase some aspects of civic virtues and related psychological capacities. Living and studying in a foreign cultural environment provide opportunities for students to interact with people from diverse backgrounds, fostering skills related to civic virtues such as empathy, open-mindedness, and perspective-taking in a non-didactic way (Chieffo & Griffiths, 2004). Research indicates that even short-term study abroad programs enhance student’s empathy and open-mindedness toward diverse perspectives, and foster a deeper sense of responsibility as global citizens (Chieffo & Griffiths, 2004). Black and Duhon (2006) assessed the impact of a month-long business-focused study abroad program in London on students' cultural awareness and personal development. Consistent with previous findings, students showed significant improvements in cross-cultural empathy and understanding of global perspectives. A more recent study examined the relationship between studying abroad and civic virtues (Boulware et al., 2023). The results suggest that undergraduate students who have gone abroad via one particular set of study abroad programs in undergraduate studies demonstrated higher levels of empathy, civic engagement, and civility toward others, compared with students who do not have these experiences or have no interest in them.
+
+## Current Study
+
+The study examined how factors such as international students’ first language, English language fluency, and the duration of their residence in the United States relate to civic virtues. We hypothesize that international students with greater English fluency and who live in the United States for a longer period of time will score higher on civic virtues, as students with higher fluency may feel more confident and able to engage in community activities and social settings. However, it is unclear whether different native languages would interact with this. Given that language differences are related to cultural differences, it may be the case that English competence alone may not be significant. We hypothesize that non-English-native speakers may score higher on civic virtues than students who are native or heritage bilingual speakers of English, maybe because navigating a foreign environment in a non-native language may require greater effort and adaptation, fostering civic virtues. Additionally, we also examined the possible interaction between first language and English fluency to investigate whether non-native English speakers who are more fluent in English score the highest civic virtues.
+
+## Method
+
+### Participants
+
+A survey was adapted from Boulware et al. (2023). Participants were recruited through the Psychology Department’s SONA system during the winter quarter in 2025 as well as through campus advertisements.
+
+## Analysis
+
+# Data Cleaning
+```{r, include = FALSE}
+#| label: clean-civic-data
+#| description: Convert Column type and add a new column to record participant#
+
+# Read the CSV file
+civic.raw <- read.csv("civic.raw.csv")  # Import CSV file
+
+# Create a function to check if a column can be safely converted to numeric
+is_convertible_to_numeric <- function(x) {
+  if(is.numeric(x)) {
+    return(TRUE)
+  } else {
+    na_before <- sum(is.na(x))
+    na_after <- sum(is.na(suppressWarnings(as.numeric(x))))
+    return(na_before == na_after)  # Return TRUE only if conversion doesn't create new NAs
+  }
+}
+
+civic.clean <- civic.raw %>%
+  # Add subject numbers starting from 1001
+  mutate(`subject #` = 1001:(1000 + nrow(.))) %>%
+  # Move subject # column to the leftmost position
+  select(`subject #`, everything()) %>%
+  # Convert appropriate columns to numeric type
+  mutate(across(where(is_convertible_to_numeric), as.numeric))
+
+# Check column types using str()
+str(civic.clean)
+view(civic.clean)
+
+```
+
+```{r, include = FALSE}
+#| label: construct-civic-data
+#| description: 
+
+civic.construct <- civic.clean %>%
+  # Remove Row 83 since the participant did not finish the survey
+  slice(-83) %>%
+  # Create summed column
+  mutate(`Civility Towards Others` = rowSums(select(., WRC_A1:WRC_A13), na.rm = TRUE),
+         `Civility Towards Me` = rowSums(select(., WRC_B1:WRC_B13), na.rm = TRUE),
+         `Civility Total` = `Civility Towards Others` + `Civility Towards Me`, 
+         `Civic Behaviors` = rowSums(select(., ceB_1:ceB_6), na.rm = TRUE),
+         `Civic Attitudes` = rowSums(select(., ceA_1:ceA_8), na.rm = TRUE),
+         `CB_CA Total` = `Civic Behaviors` + `Civic Attitudes`, 
+         `Wise Reasoning`= rowSums(select(., SWIS_1:SWIS_21), na.rm = TRUE), 
+         # Reverse code the columns (for a 1-5 scale, new_value = 6 - old_value)
+         NFC_3 = 6 - NFC_3R, 
+         NFC_4 = 6 - NFC_4R,
+         `Need for Cognition` = NFC_1 + NFC_2 + NFC_3 + NFC_4 + NFC_5 + NFC_6,
+         `Empathy` = rowSums(select(., EQ_1:EQ_8), na.rm = TRUE),
+         `Need for Closure` = rowSums(select(., Q625:Q348), na.rm = TRUE)
+         )%>%
+  
+  {
+    # Get column positions
+    all_cols <- names(.)
+    start_col <- which(all_cols == "Q625")
+    end_col <- which(all_cols == "Q348")
+    cols_to_remove <- all_cols[start_col:end_col]
+    
+    # Apply all removals
+    select(.,
+      -starts_with("WRC_A"), -starts_with("WRC_B"), 
+      -starts_with("ceB_"), -starts_with("ceA_"),
+      -Q279_First.Click, -Q279_Last.Click, -Q279_Page.Submit, -Q279_Click.Count,
+      -starts_with("SWIS_Personal_Intro"),
+      -starts_with("SWIS_"),
+      -starts_with("NFC_"),
+      -starts_with("EQ_"),
+      # Remove Q625 through Q348 columns
+      -all_of(cols_to_remove),
+      -starts_with("EH_Q"),
+      -starts_with("SA7"),
+      -Lottery_1,
+      -Q315,
+      -Q321, 
+      -prior.SA., 
+      -NoSA2a,
+      -itnl.travel,
+      -Q314
+    )
+  } %>%
+  rename(`Epistemic Humility` = SC22,
+         `Cultural Competence` = SC26) %>%
+  
+  # Reorder to place new column near the beginning
+  select(`subject #`, 
+         `Civility Towards Others`, `Civility Towards Me`, `Civility Total`, 
+         `Civic Behaviors`, `Civic Attitudes`, `CB_CA Total`,
+         `Wise Reasoning`,
+         `Need for Cognition`,
+         `Empathy`,
+         `Need for Closure`,
+         `Epistemic Humility`,
+         `Cultural Competence`,
+         everything())%>%
+
+  # Remove columns from Q373 to id 
+    select(-Q373:-id)
+
+view(civic.construct)
+write_csv(civic.construct, "civic.construct.csv")
+```
+
+

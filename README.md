@@ -2,6 +2,6 @@
 
 ## Data description
 
-The data is collected for my **master's thesis**. My thesis 
+The data is collected for my **master's thesis**. My thesis
 
 ## Planned Project Overview
