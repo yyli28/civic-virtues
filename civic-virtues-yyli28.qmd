@@ -72,6 +72,8 @@ format:
 # install.packages("ggcorrplot")
 # install.packages("ggpubr")
 
+library(stats)
+library(psych)
 library(ggpubr)
 library(ggcorrplot)
 library(conflicted)
@@ -107,21 +109,21 @@ knitr::opts_chunk$set(
 )
 ```
 
-In an interconnected world, civic virtues are crucial for fostering responsible citizenship and encouraging individuals to prioritize societal well-being over self-interest (Sherrod et al., 2002). U.S. universities, as diverse microcosms, bring domestic and international students together, offering unique contexts for civic engagement and understanding the values of others. Domestic American students may develop civic engagement through strong ties to their local communities and the American education system, while international students may bring perspectives shaped by cross-cultural experiences and adaptation to a new cultural environment. Undergoing the same admission process and sharing similar college life on campus with their American peers, international students may still differ in civic behaviors. These contexts raise critical questions about the factors that foster civic virtues and motivate individuals to engage in civic-minded behaviors. How do experiences in a foreign and culturally different environment influence civic virtues and related psychological characteristics such as empathy and cultural competence? Do international students differ on these psychological aspects from US students?
+In an interconnected world, civic virtues are crucial for fostering responsible citizenship and encouraging individuals to prioritize societal well-being over self-interest [@sherrodDimensionsCitizenshipOpportunities2002]. U.S. universities, as diverse microcosms, bring domestic and international students together, offering unique contexts for civic engagement and understanding the values of others. Domestic American students may develop civic engagement through strong ties to their local communities and the American education system, while international students may bring perspectives shaped by cross-cultural experiences and adaptation to a new cultural environment. Undergoing the same admission process and sharing similar college life on campus with their American peers, international students may still differ in civic behaviors. These contexts raise critical questions about the factors that foster civic virtues and motivate individuals to engage in civic-minded behaviors. How do experiences in a foreign and culturally different environment influence civic virtues and related psychological characteristics such as empathy and cultural competence? Do international students differ on these psychological aspects from US students?
 
 ## Literature Review
 
 ### Education and Civic Virtues
 
-Civic engagement may foster a sense of belonging, purpose, and responsibility within a community, and may empower individuals to contribute to a common good (Flanagan & Levine, 2010). Research suggests that civic education - educational experiences that are directed at increasing civic virtues - happens mostly during adolescence, but can continue into young adulthood (Flanagan & Levine, 2010; Sherrod et al., 2002). Much of this experience occurs in educational settings, particularly colleges, which offer structured opportunities through coursework, extracurricular activities, community service programs, and student organizations (Flanagan & Levine, 2010). These experiences could help young adults develop civic virtues and social responsibility.
+Civic engagement may foster a sense of belonging, purpose, and responsibility within a community, and may empower individuals to contribute to a common good [@flanaganCivicEngagementTransition2010]. Research suggests that civic education - educational experiences that are directed at increasing civic virtues - happens mostly during adolescence, but can continue into young adulthood [@flanaganCivicEngagementTransition2010; @sherrodDimensionsCitizenshipOpportunities2002]. Much of this experience occurs in educational settings, particularly colleges, which offer structured opportunities through coursework, extracurricular activities, community service programs, and student organizations [@flanaganCivicEngagementTransition2010]. These experiences could help young adults develop civic virtues and social responsibility.
 
-Besides formal instruction in character education and civility (Jeynes, 2019; Torney-Purta, 2002), non-didactic and informal experiences have important implications for the development of civic virtues as well. Indeed, research highlights that youths who are involved in community-based organizations or extracurricular activities are more likely to be civically active (Zarrett et al., 2021). Furthermore, a study suggests that participating in community service or volunteering is associated with adolescent civic beliefs about considering similar types of civic engagement behaviors (Metzger et al., 2019). Similarly, Vazina & Poulin (2019) found that prosocial/community-based activities are related to a greater likelihood of being in the high-sustained civic engagement trajectory.
+Besides formal instruction in character education and civility [@jeynesMetaAnalysisRelationshipCharacter2019; @torney-purtaSchoolsRoleDeveloping2002], non-didactic and informal experiences have important implications for the development of civic virtues as well. Indeed, research highlights that youths who are involved in community-based organizations or extracurricular activities are more likely to be civically active [@zarrettRoleOrganizedActivities2021]. Furthermore, a study suggests that participating in community service or volunteering is associated with adolescent civic beliefs about considering similar types of civic engagement behaviors [@metzgerAdolescentsCivicEngagement2019]. Similarly, @vezinaInvestigatingCivicParticipation2019 found that prosocial/community-based activities are related to a greater likelihood of being in the high-sustained civic engagement trajectory.
 
-Additionally, recent research suggests that study abroad programs may increase some aspects of civic virtues and related psychological capacities. Living and studying in a foreign cultural environment provide opportunities for students to interact with people from diverse backgrounds, fostering skills related to civic virtues such as empathy, open-mindedness, and perspective-taking in a non-didactic way (Chieffo & Griffiths, 2004). Research indicates that even short-term study abroad programs enhance student’s empathy and open-mindedness toward diverse perspectives, and foster a deeper sense of responsibility as global citizens (Chieffo & Griffiths, 2004). Black and Duhon (2006) assessed the impact of a month-long business-focused study abroad program in London on students' cultural awareness and personal development. Consistent with previous findings, students showed significant improvements in cross-cultural empathy and understanding of global perspectives. A more recent study examined the relationship between studying abroad and civic virtues (Boulware et al., 2023). The results suggest that undergraduate students who have gone abroad via one particular set of study abroad programs in undergraduate studies demonstrated higher levels of empathy, civic engagement, and civility toward others, compared with students who do not have these experiences or have no interest in them.
+Additionally, recent research suggests that study abroad programs may increase some aspects of civic virtues and related psychological capacities. Living and studying in a foreign cultural environment provide opportunities for students to interact with people from diverse backgrounds, fostering skills related to civic virtues such as empathy, open-mindedness, and perspective-taking in a non-didactic way [@chieffoLargeScaleAssessmentStudent2004]. Research indicates that even short-term study abroad programs enhance student’s empathy and open-mindedness toward diverse perspectives, and foster a deeper sense of responsibility as global citizens [@chieffoLargeScaleAssessmentStudent2004]. @blackAssessingImpactBusiness2006 assessed the impact of a month-long business-focused study abroad program in London on students' cultural awareness and personal development. Consistent with previous findings, students showed significant improvements in cross-cultural empathy and understanding of global perspectives. A more recent study examined the relationship between studying abroad and civic virtues [@boulwareStrangerStrangeLand2023]. The results suggest that undergraduate students who have gone abroad via one particular set of study abroad programs in undergraduate studies demonstrated higher levels of empathy, civic engagement, and civility toward others, compared with students who do not have these experiences or have no interest in them.
 
 ### Current Study
 
-The study examined how factors such as international students’ first language, English language fluency, and the duration of their residence in the United States relate to civic virtues. We hypothesize that international students with greater English fluency and who live in the United States for a longer period of time will score higher on civic virtues, as students with higher fluency may feel more confident and able to engage in community activities and social settings. However, it is unclear whether different native languages would interact with this. Given that language differences are related to cultural differences, it may be the case that English competence alone may not be significant. We hypothesize that non-English-native speakers may score higher on civic virtues than students who are native or heritage bilingual speakers of English, maybe because navigating a foreign environment in a non-native language may require greater effort and adaptation, fostering civic virtues. Additionally, we also examined the possible interaction between first language and English fluency to investigate whether non-native English speakers who are more fluent in English score the highest civic virtues.
+Although international students represent a substantial portion of the US college population and can play an important role in civic life, there is little research on how this experience relates to civic virtues. This study aims to investigate civic virtues among international students studying in the United States. The primary goals are to answer the key research question: do international students, due to their unique experiences in a foreign country, exhibit similar or differing levels of civic virtues compared to American students? Given that study abroad experiences can positively influence one’s civility, we hypothesize that international students may exhibit higher levels of civic virtues than American students with no experience studying abroad. This would be comparable to US students who study abroad suggesting that living in a foreign country may be an important experience related to civic virtues. Alternatively, international students may score higher on some psychological characteristics related to civic virtue development, including epistemic humility, empathy, need for cognition (NFC), and cultural competence, while showing comparable levels of civic attitudes and behaviors.
 
 # Method
 
@@ -204,7 +206,7 @@ We will use a scale developed at the Center for Practical Wisdom at the Universi
 
 ## Data Analysis
 
-To test the first hypothesis, independent t-tests will compare international and American students on each measure of civic virtues (civic attitudes, civic behaviors, and civility) and other related constructs. These comparisons will indicate whether international students, as a group, exhibit different levels of civic virtues compared to their American peers. Given the interrelated nature of some of these measures, a multivariate analysis of covariance (MANCOVA) will be conducted to account for relationships among the dependent variables and provide a more comprehensive analysis. To address the second hypothesis, multiple regression analyses will examine the relationships between English language proficiency, residency duration, and first language on civic virtues within the international student population. Separate models will be run for each dimension of civic virtues and related measures to determine how strongly these factors are related to different aspects of civic engagement. To address the third hypothesis, a one-way analysis of variance (ANOVA) will be conducted to examine differences in civic virtues among first-language groups (English-native, non-English-native, and heritage bilinguals). Moreover, an interaction term (First Language × English Fluency) will be included in regression analyses to determine whether the relationship between fluency and civic virtues varies across language groups.
+To test the first hypothesis, independent t-tests compared international and American students on each measure of civic virtues (civic attitudes, civic behaviors, and civility) and other related constructs. These comparisons indicated whether international students, as a group, exhibit different levels of civic virtues compared to their American peers. An Analysis of Variance (ANOVA) will be conducted to account for relationships among the dependent variables and provide a more comprehensive analysis.
 
 # Results
 
@@ -251,6 +253,29 @@ kbl(desc_stats,
     booktabs = TRUE) 
 ```
 
+```{r}
+#| label: summarize_construct
+#| eval: false
+#| include: false
+
+# Define a function to summarize a construct across student groups
+summarize_construct <- function(data, construct) {
+  data %>%
+    group_by(`Student Status`) %>%
+    summarise(
+      Mean = mean(.data[[construct]], na.rm = TRUE),
+      SD = sd(.data[[construct]], na.rm = TRUE),
+      N = n()
+    ) %>%
+    arrange(desc(Mean))  # Sort by highest mean
+}
+
+summarize_construct(civic_data, "Civic Attitudes")
+
+summarize_construct(civic_data, "Civility Total")
+```
+
+
 Descriptive statistics for the key measures of civic virtues are presented in @tbl-descriptive-stats. The sample exhibited varying levels of psychological constructs related to civic engagement. *Civic Attitudes* showed a mean of `r desc_stats$Mean[desc_stats$Variable == "Civic Attitudes"]` (*SD* = `r desc_stats$SD[desc_stats$Variable == "Civic Attitudes"]`), with a range from `r desc_stats$Min[desc_stats$Variable == "Civic Attitudes"]` to `r desc_stats$Max[desc_stats$Variable == "Civic Attitudes"]`. *Civic Behaviors* displayed a mean of `r desc_stats$Mean[desc_stats$Variable == "Civic Behaviors"]` (*SD* = `r desc_stats$SD[desc_stats$Variable == "Civic Behaviors"]`), suggesting moderate levels of community engagement.
 
 The variability across different civic virtue measures suggests potential differences in how participants conceptualize and enact civic engagement. *Epistemic Humility*, for instance, ranged from `r desc_stats$Min[desc_stats$Variable == "Epistemic Humility"]` to `r desc_stats$Max[desc_stats$Variable == "Epistemic Humility"]`, with a mean of `r desc_stats$Mean[desc_stats$Variable == "Epistemic Humility"]` (*SD* = `r desc_stats$SD[desc_stats$Variable == "Epistemic Humility"]`), indicating considerable individual variation in this construct.
@@ -274,6 +299,7 @@ correlation_data <- civic_data %>%
   )
 
 # Function to compute correlation matrix with p-values
+
 corr.test <- function(x) {
   # Number of variables
   n <- ncol(x)
@@ -351,7 +377,6 @@ kbl(format = "latex",
   )
 ```
 
-
 ```{r}
 #| label: fig-correlation-plot
 #| fig-cap: "Correlation Matrix of Civic Virtues Constructs"
@@ -370,9 +395,12 @@ ggcorrplot::ggcorrplot(
 )
 ```
 
-The correlation matrix presented in @tbl-correlations and visualized in @fig-correlation-plot provides a comprehensive view of these intricate relationships. *CB_CA Total* was moderately correlated with *Wise Reasoning* (r = `r corr_results$r[2,3]`, p = `r corr_results$p[2,3]`), suggesting an interconnection between behavioral and cognitive aspects of civic engagement. *Empathy* showed notable correlations with several constructs. It was moderately correlated with *Wise Reasoning* (r = `r corr_results$r[5,3]`, p = `r corr_results$p[5,3]`), and significantly associated with *Epistemic Humility* (r = `r corr_results$r[5,7]`, p = `r corr_results$p[5,7]`). These relationships highlight the potential interconnectedness of psychological characteristics related to civic virtues. *Cultural Competence* demonstrated interesting associations, including a moderate correlation with *Need for Cognition* (r = `r corr_results$r[8,4]`, p = `r corr_results$p[8,4]`). The significant correlations, marked with asterisks in @tbl-correlations (* p < 0.05, ** p < 0.01, *** p < 0.001), indicate the complex interplay between different psychological constructs related to civic engagement.
+The correlation matrix presented in @tbl-correlations and visualized in @fig-correlation-plot provides a comprehensive view of these intricate relationships. *CB_CA Total* was moderately correlated with *Wise Reasoning* (r = `r corr_results$r[2,3]`, p = `r corr_results$p[2,3]`), suggesting an interconnection between behavioral and cognitive aspects of civic engagement. *Empathy* showed notable correlations with several constructs. It was moderately correlated with *Wise Reasoning* (r = `r corr_results$r[5,3]`, p = `r corr_results$p[5,3]`), and significantly associated with *Epistemic Humility* (r = `r corr_results$r[5,7]`, p = `r corr_results$p[5,7]`). These relationships highlight the potential interconnectedness of psychological characteristics related to civic virtues. *Cultural Competence* demonstrated interesting associations, including a moderate correlation with *Need for Cognition* (r = `r corr_results$r[8,4]`, p = `r corr_results$p[8,4]`). The significant correlations, marked with asterisks in @tbl-correlations, indicate the complex interplay between different psychological constructs related to civic engagement.[^1]
+
+[^1]: Significance levels are indicated as follows: *p* < 0.05, **p** < 0.01, ***p*** < 0.001.
 
 ## T-tests
+
 ```{r}
 #| label: t-test-analysis
 
@@ -430,7 +458,6 @@ t_test_results <- map_dfr(
 )
 ```
 
-
 ```{r}
 #| label: tbl-t-tests
 #| tbl-cap: Comparison of Civic Virtues Constructs between American and International Students
@@ -448,9 +475,8 @@ t_test_results %>%
 
 ```
 
-
 ```{r}
-#| label: t-test-viz
+#| label: fig-t-test-viz
 #| fig-cap: "Comparison of Civic Virtues Constructs between American and International Students"
 #| fig-height: 12
 #| fig-width: 15
@@ -469,6 +495,10 @@ plot_data <- civic_data %>%
     values_to = "Value"
   )
 
+# Create a custom labeller function
+custom_labels <- c("CB_CA Total" = "Civic Behaviors and Civic Attitudes",
+                   "Civility Total" = "Relational Civility")
+
 ggplot(plot_data, aes(x = StudentGroup, y = Value, fill = StudentGroup)) +
   geom_boxplot(
     alpha = 0.7,  
@@ -482,7 +512,7 @@ ggplot(plot_data, aes(x = StudentGroup, y = Value, fill = StudentGroup)) +
   ) +
   
   # Facet wrap to create separate panels
-  facet_wrap(~ Variable, scales = "free_y", ncol = 3) +
+  facet_wrap(~ Variable, scales = "free_y", ncol = 3, labeller = labeller(Variable = custom_labels)) +
   
   scale_fill_manual(values = c("American" = "#FFB6C1", "International" = "#8FBC8F")) +
   
@@ -508,25 +538,114 @@ ggplot(plot_data, aes(x = StudentGroup, y = Value, fill = StudentGroup)) +
 ```
 
 ```{r}
-#| label: t-test-viz
+#| label: t-test-cacb
+#| include: false
 
+t_test_ca <- t.test(
+  civic_data$`Civic Attitudes`[civic_data$`Student Status` %in% c("American", "American.sa")],
+  civic_data$`Civic Attitudes`[civic_data$`Student Status` == "International"],
+  var.equal = TRUE  # Use FALSE if variances are unequal
+)
+
+# Print the t-test results
+print(t_test_ca)
+
+t_test_cb <- t.test(
+  civic_data$`Civic Behaviors`[civic_data$`Student Status` %in% c("American", "American.sa")],
+  civic_data$`Civic Behaviors`[civic_data$`Student Status` == "International"],
+  var.equal = TRUE  # Use FALSE if variances are unequal
+)
+
+# Print the t-test results
+print(t_test_cb)
+```
+
+```{r}
+#| label: fig-civic-behaviors-attitudes
+#| fig-cap: "Differences in Civic Behaviors and Civic Attitudes Between International and American Students"
+#| fig-width: 8
+#| fig-height: 5
+
+# Prepare data for visualization
+civic_data_filtered <- civic_data %>%
+  filter(`Student Status` %in% c("American", "American.sa", "International")) %>%
+  mutate(`Student Status` = ifelse(`Student Status` %in% c("American", "American.sa"), "American", "International")) %>%
+  select(`Student Status`, `Civic Behaviors`, `Civic Attitudes`) %>%
+  pivot_longer(cols = c(`Civic Behaviors`, `Civic Attitudes`), names_to = "Measure", values_to = "Score")
+
+# Create the enhanced boxplot with separate y-axis for each facet
+ggplot(civic_data_filtered, aes(x = `Student Status`, y = Score, fill = `Student Status`)) +
+  geom_boxplot(alpha = 0.5, color = "black", outlier.shape = NA, width = 0.6) +  
+  geom_jitter(width = 0.15, alpha = 0.5, size = 1.8, aes(color = `Student Status`)) +
+  stat_summary(fun = mean, geom = "point", shape = 4, size = 4, color = "black", stroke = 1.2) + 
+  facet_wrap(~ Measure, scales = "free_y") +  # ✅ NOW WORKS! Separate y-axis per variable
+  scale_fill_manual(values = c("American" = "#1b9e77", "International" = "#d95f02")) +
+  scale_color_manual(values = c("American" = "#1b9e77", "International" = "#d95f02")) +
+  labs(
+    title = "Civic Behaviors & Attitudes: International vs. American Students",
+    subtitle = "Boxplots with jittered data points and mean indicators (Separate y-axis)",
+    x = "Student Status", y = "Score"
+  ) +
+  theme_minimal(base_size = 14) +
+  theme(
+    legend.position = "none",
+    plot.title = element_text(face = "bold", size = 16, hjust = 0.5),
+    plot.subtitle = element_text(size = 12, hjust = 0.5),
+    strip.text = element_text(face = "bold", size = 14)
+  )
 
 ```
 
-
-## MANCOVA
 ```{r}
-#| label: mancova-main-analysis
+#| label: fig-civility-me-others
+#| fig-cap: "Differences in Civility Towards Me and Civility Towards Others Between International and American Students"
+#| fig-width: 8
+#| fig-height: 5
 
-# Load required libraries
-library(car)
-library(tidyverse)
-library(broom)
+civility_data_filtered <- civic_data %>%
+  filter(`Student Status` %in% c("American", "American.sa", "International")) %>%
+  mutate(`Student Status` = ifelse(`Student Status` %in% c("American", "American.sa"), "American", "International")) %>%
+  select(`Student Status`, `Civility Towards Me`, `Civility Towards Others`) %>%
+  pivot_longer(cols = c(`Civility Towards Me`, `Civility Towards Others`), names_to = "Measure", values_to = "Score")
 
-# Prepare data for MANCOVA
+# Create the enhanced boxplot with facet_grid
+ggplot(civility_data_filtered, aes(x = `Student Status`, y = Score, fill = `Student Status`)) +
+  geom_boxplot(alpha = 0.5, color = "black", outlier.shape = NA, width = 0.6) +  
+  geom_jitter(width = 0.15, alpha = 0.5, size = 1.8, aes(color = `Student Status`)) +
+  stat_summary(fun = mean, geom = "point", shape = 4, size = 4, color = "black", stroke = 1.2) + 
+  facet_grid(. ~ Measure) +
+  scale_fill_manual(values = c("American" = "#7570b3", "International" = "#e7298a")) +
+  scale_color_manual(values = c("American" = "#7570b3", "International" = "#e7298a")) +
+  labs(
+    title = "Civility Towards Me & Others: International vs. American Students",
+    subtitle = "Boxplots with jittered data points and mean indicators",
+    x = "Student Status", y = "Score"
+  ) +
+  theme_minimal(base_size = 14) +
+  theme(
+    legend.position = "none",
+    plot.title = element_text(face = "bold", size = 16, hjust = 0.5),
+    plot.subtitle = element_text(size = 12, hjust = 0.5),
+    strip.text = element_text(face = "bold", size = 14)
+  )
+```
+
+The dataset includes `r sprintf("a total of %d student groups", length(unique(civic_data[["Student Status"]])))`. However, in this study, we only compared American students with international students. To examine differences between American students (including those with study abroad experience) and international students, a series of independent samples t-tests were conducted across key civic and civility constructs. The results are summarized in @tbl-t-tests and @fig-t-test-viz. No siginificant differences were found in all of these constructs. 
+An independent samples t-test was conducted to examine differences in Civic Attitudes (CA) and Civic Behaviors (CB) between American students and international students. Results indicated no significant difference in Civic Behaviors, *t*(`r round(t_test_cb$parameter, 2)`) = `r round(t_test_cb$statistic, 2)`, *p* = `r round(t_test_cb$p.value, 3)`, with American students (*M* = `r round(mean(civic_data$"Civic Behaviors"[civic_data$"Student Status" %in% c("American", "American.sa")], na.rm = TRUE), 2)`, *SD* = `r round(sd(civic_data$"Civic Behaviors"[civic_data$"Student Status" %in% c("American", "American.sa")], na.rm = TRUE), 2)`) and international students (*M* = `r round(mean(civic_data$"Civic Behaviors"[civic_data$"Student Status" == "International"], na.rm = TRUE), 2)`, *SD* = `r round(sd(civic_data$"Civic Behaviors"[civic_data$"Student Status" == "International"], na.rm = TRUE), 2)`) reporting similar levels. In contrast, a slight but non-significant difference was found for Civic Attitudes, *t*(`r round(t_test_ca$parameter, 2)`) = `r round(t_test_ca$statistic, 2)`, *p* = `r round(t_test_ca$p.value, 3)`, with American students (*M* = `r round(mean(civic_data$"Civic Attitudes"[civic_data$"Student Status" %in% c("American", "American.sa")], na.rm = TRUE), 2)`, *SD* = `r round(sd(civic_data$"Civic Attitudes"[civic_data$"Student Status" %in% c("American", "American.sa")], na.rm = TRUE), 2)`) scoring slightly higher than international students (*M* = `r round(mean(civic_data$"Civic Attitudes"[civic_data$"Student Status" == "International"], na.rm = TRUE), 2)`, *SD* = `r round(sd(civic_data$"Civic Attitudes"[civic_data$"Student Status" == "International"], na.rm = TRUE), 2)`). Overall, these results suggest that while Civic Behaviors and Civic Attitudes collectively do not significantly differ between groups, there is a slight trend in Civic Attitudes favoring American students. These patterns are further illustrated in @fig-civic-behaviors-attitudes, which visualizes the distribution of Civic Behaviors and Civic Attitudes across groups. Additionally, detailed differences in civility towards me and civility towards others was visualized in @fig-civility-me-others. 
+
+
+## ANOVA
+```{r}
+#| label: anova-analysis
+#| include: false
+
 # Select dependent variables
 dependent_vars <- c(
   "Civility Total", 
+  "Civility Towards Me",
+  "Civility Towards Others",
+  "Civic Behaviors", 
+  "Civic Attitudes",
   "CB_CA Total", 
   "Wise Reasoning", 
   "Need for Cognition", 
@@ -536,9 +655,8 @@ dependent_vars <- c(
   "Cultural Competence"
 )
 
-# Prepare the data matrix
-mancova_data <- civic_data %>%
-  # Ensure StudentGroup includes all three categories
+# Prepare the data for ANOVA
+anova_data <- civic_data %>%
   mutate(
     StudentGroup = case_when(
       `Student Status` == "International" ~ "International",
@@ -547,84 +665,93 @@ mancova_data <- civic_data %>%
       TRUE ~ "Other"
     )
   ) %>%
-  # Filter out any 'Other' categories if they exist
-  filter(StudentGroup != "Other") %>%
-  # Include covariates if needed (e.g., Age)
-  select(StudentGroup, Age, all_of(dependent_vars))
+  filter(StudentGroup != "Other")
 
-# Prepare the dependent variable matrix
-dependent_matrix <- as.matrix(mancova_data[, dependent_vars])
+# Perform individual ANOVAs for each dependent variable
+anova_results <- lapply(dependent_vars, function(var) {
+  # Use backticks to handle column names with spaces
+  formula <- as.formula(paste("`", var, "` ~ StudentGroup", sep = ""))
+  
+  # Perform one-way ANOVA
+  model <- aov(formula, data = anova_data)
+  
+  # Get ANOVA summary
+  model_summary <- summary(model)[[1]]
+  
+  # Create a dataframe with results
+  result_df <- data.frame(
+    Variable = var,
+    df_between = model_summary["StudentGroup", "Df"],
+    df_within = model_summary["Residuals", "Df"],
+    SS_between = model_summary["StudentGroup", "Sum Sq"],
+    SS_within = model_summary["Residuals", "Sum Sq"],
+    MS_between = model_summary["StudentGroup", "Mean Sq"],
+    MS_within = model_summary["Residuals", "Mean Sq"],
+    F_value = model_summary["StudentGroup", "F value"],
+    p_value = model_summary["StudentGroup", "Pr(>F)"]
+  )
+  
+  return(result_df)
+})
 
-# Perform MANCOVA
-# Use multivariate linear model with StudentGroup and Age
-mancova_model <- manova(
-  dependent_matrix ~ StudentGroup + Age, 
-  data = mancova_data
-)
+# Combine results
+anova_summary <- do.call(rbind, anova_results)
 
-# Summary of MANCOVA using different test statistics
-summary_mancova_wilks <- summary(mancova_model, test = "Wilks")
-summary_mancova_pillai <- summary(mancova_model, test = "Pillai")
-summary_mancova_hotelling <- summary(mancova_model, test = "Hotelling")
+# Format p-values
+anova_summary$Significance <- ifelse(anova_summary$p_value < 0.001, "***",
+                                     ifelse(anova_summary$p_value < 0.01, "**",
+                                            ifelse(anova_summary$p_value < 0.05, "*", "ns")))
 
-# Print MANCOVA results
-cat("Wilks' Lambda Test:\n")
-print(summary_mancova_wilks)
+# Create a nice table of ANOVA results
+anova_summary %>%
+  kbl(
+    caption = "One-way ANOVA Results for Civic Virtues Constructs",
+    booktabs = TRUE,
+    digits = 3
+  ) %>%
+  kable_styling(full_width = FALSE)
 
-cat("\nPillai's Trace Test:\n")
-print(summary_mancova_pillai)
-
-cat("\nHotelling-Lawley Trace Test:\n")
-print(summary_mancova_hotelling)
 ```
 
 ```{r}
-#| label: mancova-posthoc-analysis
+#| label: posthoc-analysis
+#| include: false
 
-# Perform post-hoc univariate ANOVAs
-univariate_results <- lapply(dependent_vars, function(var) {
-  formula <- as.formula(paste(var, "~ StudentGroup + Age"))
-  model <- lm(formula, data = mancova_data)
-  anova_result <- anova(model)
-  tidy_result <- broom::tidy(anova_result)
-  tidy_result$Variable <- var
-  return(tidy_result)
+# Perform Tukey's HSD post-hoc test for each significant variable
+posthoc_results <- lapply(dependent_vars, function(var) {
+  # Use backticks to handle column names with spaces
+  formula <- as.formula(paste("`", var, "` ~ StudentGroup", sep = ""))
+  
+  # Perform Tukey's HSD test
+  tukey_result <- TukeyHSD(aov(formula, data = anova_data))
+  
+  # Convert to data frame
+  tukey_df <- as.data.frame(tukey_result$StudentGroup)
+  tukey_df$comparison <- rownames(tukey_result$StudentGroup)
+  tukey_df$variable <- var
+  
+  return(tukey_df)
 })
 
-# Combine univariate results
-univariate_summary <- do.call(rbind, univariate_results)
+# Combine results
+posthoc_summary <- do.call(rbind, posthoc_results)
 
-# Create a nice table of univariate results
-univariate_summary %>%
+# Create a nice table of all post-hoc results
+posthoc_summary %>%
   kbl(
-    caption = "Univariate ANOVA Results for Civic Virtues Constructs",
-    booktabs = TRUE
+    caption = "Post-hoc Comparisons between Student Groups",
+    col.names = c("Difference", "Lower Bound", "Upper Bound", "Adjusted p-value", "Comparison", "Variable"),
+    booktabs = TRUE,
+    digits = 3
   ) %>%
-  kable_styling()
-
-# Descriptive statistics by group
-group_descriptives <- mancova_data %>%
-  group_by(StudentGroup) %>%
-  summarise(across(
-    all_of(dependent_vars), 
-    list(
-      Mean = ~mean(., na.rm = TRUE), 
-      SD = ~sd(., na.rm = TRUE)
-    )
-  ))
-
-# Create a nice table of descriptive statistics
-group_descriptives %>%
-  kbl(
-    caption = "Descriptive Statistics by Student Group",
-    booktabs = TRUE
-  ) %>%
-  kable_styling()
+  kable_styling(full_width = FALSE)
 ```
 
+A series of one-way analyses of variance (ANOVAs) were conducted to examine potential differences in civic virtue constructs across student groups (International, Domestic, and Study Abroad). The analyses included multiple psychological measures: Civility Total, Civility Towards Me, Civility Towards Others, Civic Behaviors, Civic Attitudes, Wise Reasoning, Need for Cognition, Empathy, Need for Closure, Epistemic Humility, and Cultural Competence.The ANOVA results showed no statistically significant differences between student groups across the examined constructs. Post-hoc Tukey's Honest Significant Difference (HSD) tests further confirmed the lack of significant variations among pairwise group comparisons. Specifically, no significant group differences were observed in any of the measured psychological characteristics. The absence of statistically significant differences suggests that, within this sample, international, domestic, and study abroad students exhibited comparable levels of civic virtues and related psychological attributes. These findings imply that the student experience, regardless of international status, may promote similar developmental trajectories in civic-minded characteristics. The results challenge initial expectations of substantive differences between student groups and highlight the potential homogeneity of civic virtue development in a university setting.
 
+\clearpage
 
+# References
 
-
-
-
+::: {#refs}
+:::
