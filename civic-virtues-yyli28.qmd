@@ -46,14 +46,13 @@ language:
 format:
   apaquarto-docx: default
   apaquarto-html: default
-  apaquarto-pdf: default
   apaquarto-typst: 
     keep-typ: true
     list-of-figures: true
     list-of-tables: true
     toc: true
   apaquarto-pdf:
-    # Can be jou (journal), man (manuscript), stu (student), or doc (document)
+    prefer-html: true
     documentmode: man
     keep-tex: true
     # You can turn these off for a simple document
@@ -66,17 +65,46 @@ format:
     out-width: 40%
 ---
 
-```{r, include = FALSE}
+```{r}
 #| label: setup
 #| include: false
 
+# install.packages("ggcorrplot")
+# install.packages("ggpubr")
+
+library(ggpubr)
+library(ggcorrplot)
 library(conflicted)
 library(tidyverse)
 library(flextable)
 library(ftExtra)
 library(knitr)
+library(kableExtra) 
+library(rempsyc) 
 conflicts_prefer(dplyr::filter, .quiet = TRUE)
 conflicts_prefer(flextable::separate_header, .quiet = TRUE)
+
+# Read the cleaned data
+# I cleaned my raw data in scripts/clean_data.R
+civic_data <- read_csv("civic-virtues-dataset/civic.clean.csv")
+```
+
+```{r}
+#| label: analysis-preferences
+#| include: false
+
+# Set seed for reproducibility
+set.seed(42)
+
+# Set global chunk options
+knitr::opts_chunk$set(
+  cache.extra = knitr::rand_seed,
+  fig.height = 6,
+  fig.width = 7,
+  message = FALSE,
+  warning = FALSE,
+  comment = ""
+)
 ```
 
 In an interconnected world, civic virtues are crucial for fostering responsible citizenship and encouraging individuals to prioritize societal well-being over self-interest (Sherrod et al., 2002). U.S. universities, as diverse microcosms, bring domestic and international students together, offering unique contexts for civic engagement and understanding the values of others. Domestic American students may develop civic engagement through strong ties to their local communities and the American education system, while international students may bring perspectives shaped by cross-cultural experiences and adaptation to a new cultural environment. Undergoing the same admission process and sharing similar college life on campus with their American peers, international students may still differ in civic behaviors. These contexts raise critical questions about the factors that foster civic virtues and motivate individuals to engage in civic-minded behaviors. How do experiences in a foreign and culturally different environment influence civic virtues and related psychological characteristics such as empathy and cultural competence? Do international students differ on these psychological aspects from US students?
@@ -91,123 +119,512 @@ Besides formal instruction in character education and civility (Jeynes, 2019; To
 
 Additionally, recent research suggests that study abroad programs may increase some aspects of civic virtues and related psychological capacities. Living and studying in a foreign cultural environment provide opportunities for students to interact with people from diverse backgrounds, fostering skills related to civic virtues such as empathy, open-mindedness, and perspective-taking in a non-didactic way (Chieffo & Griffiths, 2004). Research indicates that even short-term study abroad programs enhance student’s empathy and open-mindedness toward diverse perspectives, and foster a deeper sense of responsibility as global citizens (Chieffo & Griffiths, 2004). Black and Duhon (2006) assessed the impact of a month-long business-focused study abroad program in London on students' cultural awareness and personal development. Consistent with previous findings, students showed significant improvements in cross-cultural empathy and understanding of global perspectives. A more recent study examined the relationship between studying abroad and civic virtues (Boulware et al., 2023). The results suggest that undergraduate students who have gone abroad via one particular set of study abroad programs in undergraduate studies demonstrated higher levels of empathy, civic engagement, and civility toward others, compared with students who do not have these experiences or have no interest in them.
 
-## Current Study
+### Current Study
 
 The study examined how factors such as international students’ first language, English language fluency, and the duration of their residence in the United States relate to civic virtues. We hypothesize that international students with greater English fluency and who live in the United States for a longer period of time will score higher on civic virtues, as students with higher fluency may feel more confident and able to engage in community activities and social settings. However, it is unclear whether different native languages would interact with this. Given that language differences are related to cultural differences, it may be the case that English competence alone may not be significant. We hypothesize that non-English-native speakers may score higher on civic virtues than students who are native or heritage bilingual speakers of English, maybe because navigating a foreign environment in a non-native language may require greater effort and adaptation, fostering civic virtues. Additionally, we also examined the possible interaction between first language and English fluency to investigate whether non-native English speakers who are more fluent in English score the highest civic virtues.
 
-## Method
+# Method
 
-### Participants
+## Participants
 
-A survey was adapted from Boulware et al. (2023). Participants were recruited through the Psychology Department’s SONA system during the winter quarter in 2025 as well as through campus advertisements.
+```{r}
+#| label: demographics
 
-## Analysis
+# Create a new dataset for demographic analysis
+demo_data <- civic_data %>%
+  mutate(`Student Status` = ifelse(`Student Status` == "American.sa", "American", `Student Status`)) %>%
+  select(`Student Status`, Age, Gender, Ethnicity)
 
-# Data Cleaning
-```{r, include = FALSE}
-#| label: clean-civic-data
-#| description: Convert Column type and add a new column to record participant#
+# Calculate Age Mean and SD
+age_summary <- demo_data %>%
+  group_by(`Student Status`) %>%
+  summarise(Age = sprintf("%.2f (%.2f)", mean(Age, na.rm = TRUE), sd(Age, na.rm = TRUE))) %>%
+  mutate(Label = "Age (years)", Level = "Mean (SD)") %>%
+  pivot_wider(names_from = `Student Status`, values_from = Age)
 
-# Read the CSV file
-civic.raw <- read.csv("civic.raw.csv")  # Import CSV file
+# Calculate Gender Counts and Percentages
+gender_summary <- demo_data %>%
+  group_by(`Student Status`, Gender) %>%
+  summarise(n = n(), .groups = 'drop') %>%
+  group_by(`Student Status`) %>%
+  mutate(Percentage = round(n / sum(n) * 100, 1)) %>%
+  mutate(Value = sprintf("%d (%.1f%%)", n, Percentage)) %>%
+  select(`Student Status`, Gender, Value) %>%
+  pivot_wider(names_from = `Student Status`, values_from = Value) %>%
+  rename(Level = Gender) %>%
+  mutate(Label = "Gender") %>%
+  arrange(Level)  # Ensure Gender subcategories are ordered
 
-# Create a function to check if a column can be safely converted to numeric
-is_convertible_to_numeric <- function(x) {
-  if(is.numeric(x)) {
-    return(TRUE)
-  } else {
-    na_before <- sum(is.na(x))
-    na_after <- sum(is.na(suppressWarnings(as.numeric(x))))
-    return(na_before == na_after)  # Return TRUE only if conversion doesn't create new NAs
+# Ensure "Gender" appears only once in the first column
+gender_summary$Label[duplicated(gender_summary$Label)] <- ""
+
+# Calculate Ethnicity Counts and Percentages
+ethnicity_summary <- demo_data %>%
+  group_by(`Student Status`, Ethnicity) %>%
+  summarise(n = n(), .groups = 'drop') %>%
+  group_by(`Student Status`) %>%
+  mutate(Percentage = round(n / sum(n) * 100, 1)) %>%
+  mutate(Value = sprintf("%d (%.1f%%)", n, Percentage)) %>%
+  select(`Student Status`, Ethnicity, Value) %>%
+  pivot_wider(names_from = `Student Status`, values_from = Value) %>%
+  rename(Level = Ethnicity) %>%
+  mutate(Label = "Ethnicity") %>%
+  arrange(Level)  # Ensure Ethnicity subcategories are ordered
+
+# Ensure "Ethnicity" appears only once in the first column
+ethnicity_summary$Label[duplicated(ethnicity_summary$Label)] <- ""
+
+# Combine all sections into a single table
+demographic_table <- bind_rows(age_summary, gender_summary, ethnicity_summary)
+
+```
+
+```{r}
+#| label: tbl-demographics
+#| tbl-cap: Demographic Characteristics of Participants
+
+demographic_table %>%
+  kable(align = "l", col.names = c("Label", "Level", "American", "International")) %>%
+  kable_styling(full_width = FALSE, bootstrap_options = c("striped", "hover"))
+```
+
+A survey was adapted from Boulware et al. (2023). Participants were recruited through the Psychology Department’s SONA system during the winter quarter in 2025 as well as through campus advertisements. The total sample consisted of `r nrow(civic_data)` participants, with `r sum(civic_data[["Student Status"]] == "International")` international students and `r sum(civic_data[["Student Status"]] %in% c("American", "American.sa"))` domestic students, representing a diverse composition of student backgrounds as detailed in @tbl-demographics.
+
+## Measures
+
+A survey will be adapted from Boulware et al. (2023), and distributed through the Psychology Department’s research participant recruitment system during the winter quarter in 2025.
+
+### Civic Virtues
+
+We will use two measures to assess civic virtues. The first is Doolittle and Faul’s (2013) 14-item Civic Engagement Scale. It includes the 8 civic attitude subscale (e.g., “I feel responsible for my community”, 1 = disagree, and 7 = agree) and 6 civic behavior items (e.g., “I am involved in structured volunteer position(s) in the community”, 1 = never, and 7 = always). The second one is based on the Workplace Relational Civility scale, tailored for student population. It includes 13 items assessing civility towards others and 13 items assessing civility experienced by participants (Di Fabio & Gori, 2016). Sample items include “I was able to express my values and my beliefs calmly to others” and “Others were able to express their point of view without being disrespectful toward me” (1= not at all, and 5 = a great deal).
+
+### Other constructs related to civic virtues
+
+We will use a scale developed at the Center for Practical Wisdom at the University of Chicago to assess epistemic humility (Hoeckner, 2011, personal communication). Sample items include “I accept that many good and bad things happening to me are beyond my control” (1 = strongly disagree, and 8 = strongly agree). We will use the 8-item Empathy Quotient to measure empathy towards others (Loewen et al., 2009). Sample items include “I find it easy to put myself in somebody else’s shoes” (1 = never, and 5 = always). We will use the 6-item NFC short form scale to measure the tendency to engage in cognitive effort (Lins De Holanda Coelho et al., 2020). Sample questions include “I would prefer complex to simple problems” (1 = extremely uncharacteristic, and 5 = extremely characteristic). We will measure cultural competency based on a set of questions provided by the Study Abroad program at the University of Chicago. For international students, we will have questions asking them to report their first language, English proficiency (indicated by the Test of English as a Foreign Language or a self-report scale), and duration of their residence in the United States. American students will indicate whether they have studied abroad.
+
+## Data Analysis
+
+To test the first hypothesis, independent t-tests will compare international and American students on each measure of civic virtues (civic attitudes, civic behaviors, and civility) and other related constructs. These comparisons will indicate whether international students, as a group, exhibit different levels of civic virtues compared to their American peers. Given the interrelated nature of some of these measures, a multivariate analysis of covariance (MANCOVA) will be conducted to account for relationships among the dependent variables and provide a more comprehensive analysis. To address the second hypothesis, multiple regression analyses will examine the relationships between English language proficiency, residency duration, and first language on civic virtues within the international student population. Separate models will be run for each dimension of civic virtues and related measures to determine how strongly these factors are related to different aspects of civic engagement. To address the third hypothesis, a one-way analysis of variance (ANOVA) will be conducted to examine differences in civic virtues among first-language groups (English-native, non-English-native, and heritage bilinguals). Moreover, an interaction term (First Language × English Fluency) will be included in regression analyses to determine whether the relationship between fluency and civic virtues varies across language groups.
+
+# Results
+
+## Descriptive Analyses
+
+```{r}
+#| label: prepare-descriptive-data
+#| code-summary: "Prepare data for descriptive statistics"
+
+# Select only numeric columns for analysis
+desc_numeric_data <- civic_data %>%
+  select(where(is.numeric), -`subject #`, -`CC.sa`, -`Age`)
+```
+
+```{r}
+#| label: summary-function
+#| code-summary: "Basic summary of variables"
+#| code-fold: true
+#| include: false
+
+# Provide summary of numeric variables
+summary(desc_numeric_data)
+```
+
+```{r}
+#| label: tbl-descriptive-stats
+#| tbl-cap: Descriptive Statistics of Civic Virtues Measures
+
+# Calculate descriptive statistics
+desc_stats <- desc_numeric_data %>%
+  pivot_longer(everything(), names_to = "Variable", values_to = "Value") %>%
+  group_by(Variable) %>%
+  summarize(
+    Mean = mean(Value, na.rm = TRUE),
+    SD = sd(Value, na.rm = TRUE),
+    Median = median(Value, na.rm = TRUE),
+    Min = min(Value, na.rm = TRUE),
+    Max = max(Value, na.rm = TRUE)
+  ) %>%
+  mutate(across(c(Mean, SD, Median, Min, Max), 
+                ~round(., 2)))
+
+kbl(desc_stats, 
+    booktabs = TRUE) 
+```
+
+Descriptive statistics for the key measures of civic virtues are presented in @tbl-descriptive-stats. The sample exhibited varying levels of psychological constructs related to civic engagement. *Civic Attitudes* showed a mean of `r desc_stats$Mean[desc_stats$Variable == "Civic Attitudes"]` (*SD* = `r desc_stats$SD[desc_stats$Variable == "Civic Attitudes"]`), with a range from `r desc_stats$Min[desc_stats$Variable == "Civic Attitudes"]` to `r desc_stats$Max[desc_stats$Variable == "Civic Attitudes"]`. *Civic Behaviors* displayed a mean of `r desc_stats$Mean[desc_stats$Variable == "Civic Behaviors"]` (*SD* = `r desc_stats$SD[desc_stats$Variable == "Civic Behaviors"]`), suggesting moderate levels of community engagement.
+
+The variability across different civic virtue measures suggests potential differences in how participants conceptualize and enact civic engagement. *Epistemic Humility*, for instance, ranged from `r desc_stats$Min[desc_stats$Variable == "Epistemic Humility"]` to `r desc_stats$Max[desc_stats$Variable == "Epistemic Humility"]`, with a mean of `r desc_stats$Mean[desc_stats$Variable == "Epistemic Humility"]` (*SD* = `r desc_stats$SD[desc_stats$Variable == "Epistemic Humility"]`), indicating considerable individual variation in this construct.
+
+## Bivariate Correlations
+
+```{r}
+#| label: bivariate-correlations
+
+# Select constructs for correlation analysis
+correlation_data <- civic_data %>%
+  select(
+    `Civility Total`,
+    `CB_CA Total`, 
+    `Wise Reasoning`,
+    `Need for Cognition`,
+    `Empathy`,
+    `Need for Closure`,
+    `Epistemic Humility`,
+    `Cultural Competence`
+  )
+
+# Function to compute correlation matrix with p-values
+corr.test <- function(x) {
+  # Number of variables
+  n <- ncol(x)
+  
+  # Create matrices to store correlation and p-values
+  r <- matrix(NA, n, n)
+  p <- matrix(NA, n, n)
+  
+  # Compute correlations and p-values
+  for (i in 1:n) {
+    for (j in 1:n) {
+      if (i != j) {
+        test <- cor.test(x[,i], x[,j])
+        r[i,j] <- round(test$estimate, 3)
+        p[i,j] <- round(test$p.value, 3)
+      } else {
+        r[i,j] <- 1
+        p[i,j] <- NA
+      }
+    }
+  }
+  
+  # Add column and row names
+  colnames(r) <- colnames(x)
+  rownames(r) <- colnames(x)
+  colnames(p) <- colnames(x)
+  rownames(p) <- colnames(x)
+  
+  return(list(r = r, p = p))
+}
+
+# Compute correlation matrix
+corr_results <- corr.test(as.matrix(correlation_data))
+
+# Create correlation matrix with significance markers
+corr_matrix_formatted <- matrix("", nrow(corr_results$r), ncol(corr_results$r))
+rownames(corr_matrix_formatted) <- rownames(corr_results$r)
+colnames(corr_matrix_formatted) <- colnames(corr_results$r)
+
+for (i in 1:nrow(corr_results$r)) {
+  for (j in 1:ncol(corr_results$r)) {
+    if (i != j) {
+      # Add significance markers
+      sig_marker <- if (corr_results$p[i,j] < 0.001) "***" 
+                    else if (corr_results$p[i,j] < 0.01) "**" 
+                    else if (corr_results$p[i,j] < 0.05) "*" 
+                    else "ns"
+      
+      corr_matrix_formatted[i,j] <- paste0(
+        round(corr_results$r[i,j], 3), 
+        sig_marker
+      )
+    } else {
+      corr_matrix_formatted[i,j] <- "1.000"
+    }
   }
 }
 
-civic.clean <- civic.raw %>%
-  # Add subject numbers starting from 1001
-  mutate(`subject #` = 1001:(1000 + nrow(.))) %>%
-  # Move subject # column to the leftmost position
-  select(`subject #`, everything()) %>%
-  # Convert appropriate columns to numeric type
-  mutate(across(where(is_convertible_to_numeric), as.numeric))
+# Convert correlation matrix to a data frame
+corr_table <- corr_matrix_formatted %>%
+  as.data.frame() %>%
+  rownames_to_column("Variable")
+```
 
-# Check column types using str()
-str(civic.clean)
-view(civic.clean)
+```{r}
+#| label: tbl-correlations
+#| tbl-cap: Bivariate Correlations among Civic Virtues Constructs
+# Generate correlation table 
+
+corr_table %>%
+kbl(format = "latex",
+    booktabs = TRUE) %>%
+  kable_styling(
+    latex_options = c("scale_down", "landscape", "hold_position")
+  )
+```
+
+
+```{r}
+#| label: fig-correlation-plot
+#| fig-cap: "Correlation Matrix of Civic Virtues Constructs"
+#| fig-height: 7
+#| fig-width: 7
+
+ggcorrplot::ggcorrplot(
+  corr_results$r,  # Use numeric correlation matrix instead
+  type = "lower",  
+  show.diag = FALSE,  
+  lab = TRUE,  
+  lab_size = 3,  
+  method = "circle",  
+  colors = c("#6D9EC1", "white", "#E64B35"),  
+  title = "Correlation Matrix of Civic Virtues Constructs"
+)
+```
+
+The correlation matrix presented in @tbl-correlations and visualized in @fig-correlation-plot provides a comprehensive view of these intricate relationships. *CB_CA Total* was moderately correlated with *Wise Reasoning* (r = `r corr_results$r[2,3]`, p = `r corr_results$p[2,3]`), suggesting an interconnection between behavioral and cognitive aspects of civic engagement. *Empathy* showed notable correlations with several constructs. It was moderately correlated with *Wise Reasoning* (r = `r corr_results$r[5,3]`, p = `r corr_results$p[5,3]`), and significantly associated with *Epistemic Humility* (r = `r corr_results$r[5,7]`, p = `r corr_results$p[5,7]`). These relationships highlight the potential interconnectedness of psychological characteristics related to civic virtues. *Cultural Competence* demonstrated interesting associations, including a moderate correlation with *Need for Cognition* (r = `r corr_results$r[8,4]`, p = `r corr_results$p[8,4]`). The significant correlations, marked with asterisks in @tbl-correlations (* p < 0.05, ** p < 0.01, *** p < 0.001), indicate the complex interplay between different psychological constructs related to civic engagement.
+
+## T-tests
+```{r}
+#| label: t-test-analysis
+
+# Prepare data for t-tests
+t_test_data <- civic_data %>%
+  mutate(
+    StudentGroup = if_else(`Student Status` %in% c("American", "American.sa"), 
+                           "American", 
+                           "International")
+  ) %>%
+  select(
+    StudentGroup,
+    `Civility Total`,
+    `CB_CA Total`, 
+    `Wise Reasoning`,
+    `Need for Cognition`,
+    `Empathy`,
+    `Need for Closure`,
+    `Epistemic Humility`,
+    `Cultural Competence`
+  )
+
+# Perform t-tests for each construct
+perform_t_test <- function(data, variable, group) {
+  # Separate groups
+  american_group <- data %>% 
+    filter(StudentGroup == "American") %>% 
+    pull(!!variable)
+  international_group <- data %>% 
+    filter(StudentGroup == "International") %>% 
+    pull(!!variable)
+  
+  # Perform t-test with equal variances
+  test_result <- t.test(american_group, international_group, var.equal = TRUE)
+  
+  # Return formatted results
+  tibble(
+    Variable = variable,
+    t_statistic = round(test_result$statistic, 3),
+    df = round(test_result$parameter, 0),  # Now an integer
+    p_value = round(test_result$p.value, 3),
+    mean_american = round(mean(american_group, na.rm = TRUE), 3),
+    sd_american = round(sd(american_group, na.rm = TRUE), 3),
+    mean_international = round(mean(international_group, na.rm = TRUE), 3),
+    sd_international = round(sd(international_group, na.rm = TRUE), 3)
+  )
+}
+
+# Run t-tests for all selected constructs
+t_test_results <- map_dfr(
+  c("Civility Total", "CB_CA Total", 
+    "Wise Reasoning", "Need for Cognition", "Empathy", 
+    "Need for Closure", "Epistemic Humility", "Cultural Competence"),
+  ~perform_t_test(t_test_data, .x, "StudentGroup")
+)
+```
+
+
+```{r}
+#| label: tbl-t-tests
+#| tbl-cap: Comparison of Civic Virtues Constructs between American and International Students
+
+t_test_results %>%
+  kbl(
+    booktabs = TRUE,
+    col.names = c("Variable", "t", "df", "p", 
+                  "M (American)", "SD (American)", 
+                  "M (International)", "SD (International)")
+  ) %>%
+  kable_styling(
+    latex_options = c("scale_down", "landscape", "hold_position")
+  )
 
 ```
 
-```{r, include = FALSE}
-#| label: construct-civic-data
-#| description: 
 
-civic.construct <- civic.clean %>%
-  # Remove Row 83 since the participant did not finish the survey
-  slice(-83) %>%
-  # Create summed column
-  mutate(`Civility Towards Others` = rowSums(select(., WRC_A1:WRC_A13), na.rm = TRUE),
-         `Civility Towards Me` = rowSums(select(., WRC_B1:WRC_B13), na.rm = TRUE),
-         `Civility Total` = `Civility Towards Others` + `Civility Towards Me`, 
-         `Civic Behaviors` = rowSums(select(., ceB_1:ceB_6), na.rm = TRUE),
-         `Civic Attitudes` = rowSums(select(., ceA_1:ceA_8), na.rm = TRUE),
-         `CB_CA Total` = `Civic Behaviors` + `Civic Attitudes`, 
-         `Wise Reasoning`= rowSums(select(., SWIS_1:SWIS_21), na.rm = TRUE), 
-         # Reverse code the columns (for a 1-5 scale, new_value = 6 - old_value)
-         NFC_3 = 6 - NFC_3R, 
-         NFC_4 = 6 - NFC_4R,
-         `Need for Cognition` = NFC_1 + NFC_2 + NFC_3 + NFC_4 + NFC_5 + NFC_6,
-         `Empathy` = rowSums(select(., EQ_1:EQ_8), na.rm = TRUE),
-         `Need for Closure` = rowSums(select(., Q625:Q348), na.rm = TRUE)
-         )%>%
+```{r}
+#| label: t-test-viz
+#| fig-cap: "Comparison of Civic Virtues Constructs between American and International Students"
+#| fig-height: 12
+#| fig-width: 15
+
+plot_data <- civic_data %>%
+  mutate(
+    StudentGroup = if_else(`Student Status` %in% c("American", "American.sa"), 
+                           "American", 
+                           "International")
+  ) %>%
+  pivot_longer(
+    cols = c(`Civility Total`, `CB_CA Total`, 
+             `Wise Reasoning`, `Need for Cognition`, `Empathy`, 
+             `Need for Closure`, `Epistemic Humility`, `Cultural Competence`),
+    names_to = "Variable",
+    values_to = "Value"
+  )
+
+ggplot(plot_data, aes(x = StudentGroup, y = Value, fill = StudentGroup)) +
+  geom_boxplot(
+    alpha = 0.7,  
+    width = 0.7
+  ) +
   
-  {
-    # Get column positions
-    all_cols <- names(.)
-    start_col <- which(all_cols == "Q625")
-    end_col <- which(all_cols == "Q348")
-    cols_to_remove <- all_cols[start_col:end_col]
-    
-    # Apply all removals
-    select(.,
-      -starts_with("WRC_A"), -starts_with("WRC_B"), 
-      -starts_with("ceB_"), -starts_with("ceA_"),
-      -Q279_First.Click, -Q279_Last.Click, -Q279_Page.Submit, -Q279_Click.Count,
-      -starts_with("SWIS_Personal_Intro"),
-      -starts_with("SWIS_"),
-      -starts_with("NFC_"),
-      -starts_with("EQ_"),
-      # Remove Q625 through Q348 columns
-      -all_of(cols_to_remove),
-      -starts_with("EH_Q"),
-      -starts_with("SA7"),
-      -Lottery_1,
-      -Q315,
-      -Q321, 
-      -prior.SA., 
-      -NoSA2a,
-      -itnl.travel,
-      -Q314
+  stat_compare_means(
+    method = "t.test",
+    label = "p.signif",
+    label.y.npc = 0.95
+  ) +
+  
+  # Facet wrap to create separate panels
+  facet_wrap(~ Variable, scales = "free_y", ncol = 3) +
+  
+  scale_fill_manual(values = c("American" = "#FFB6C1", "International" = "#8FBC8F")) +
+  
+  
+  theme_minimal() +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1),                 # Rotate x-axis labels
+    plot.title = element_text(hjust = 0.5, face = "bold", size = 20),
+    plot.subtitle = element_text(hjust = 0.5, size = 15),
+    strip.text = element_text(face = "bold"),
+    axis.title = element_text(face = "bold"),
+    legend.title = element_text(face = "bold")
+  ) +
+  
+  labs(
+    title = "Comparison of Civic Virtues Constructs",
+    subtitle = "American vs International Students",
+    x = "Student Group",
+    y = "Score",
+    fill = "Student Group"
+  ) 
+
+```
+
+```{r}
+#| label: t-test-viz
+
+
+```
+
+
+## MANCOVA
+```{r}
+#| label: mancova-main-analysis
+
+# Load required libraries
+library(car)
+library(tidyverse)
+library(broom)
+
+# Prepare data for MANCOVA
+# Select dependent variables
+dependent_vars <- c(
+  "Civility Total", 
+  "CB_CA Total", 
+  "Wise Reasoning", 
+  "Need for Cognition", 
+  "Empathy", 
+  "Need for Closure", 
+  "Epistemic Humility", 
+  "Cultural Competence"
+)
+
+# Prepare the data matrix
+mancova_data <- civic_data %>%
+  # Ensure StudentGroup includes all three categories
+  mutate(
+    StudentGroup = case_when(
+      `Student Status` == "International" ~ "International",
+      `Student Status` == "American" ~ "Domestic",
+      `Student Status` == "American.sa" ~ "Study Abroad",
+      TRUE ~ "Other"
     )
-  } %>%
-  rename(`Epistemic Humility` = SC22,
-         `Cultural Competence` = SC26) %>%
-  
-  # Reorder to place new column near the beginning
-  select(`subject #`, 
-         `Civility Towards Others`, `Civility Towards Me`, `Civility Total`, 
-         `Civic Behaviors`, `Civic Attitudes`, `CB_CA Total`,
-         `Wise Reasoning`,
-         `Need for Cognition`,
-         `Empathy`,
-         `Need for Closure`,
-         `Epistemic Humility`,
-         `Cultural Competence`,
-         everything())%>%
+  ) %>%
+  # Filter out any 'Other' categories if they exist
+  filter(StudentGroup != "Other") %>%
+  # Include covariates if needed (e.g., Age)
+  select(StudentGroup, Age, all_of(dependent_vars))
 
-  # Remove columns from Q373 to id 
-    select(-Q373:-id)
+# Prepare the dependent variable matrix
+dependent_matrix <- as.matrix(mancova_data[, dependent_vars])
 
-view(civic.construct)
-write_csv(civic.construct, "civic.construct.csv")
+# Perform MANCOVA
+# Use multivariate linear model with StudentGroup and Age
+mancova_model <- manova(
+  dependent_matrix ~ StudentGroup + Age, 
+  data = mancova_data
+)
+
+# Summary of MANCOVA using different test statistics
+summary_mancova_wilks <- summary(mancova_model, test = "Wilks")
+summary_mancova_pillai <- summary(mancova_model, test = "Pillai")
+summary_mancova_hotelling <- summary(mancova_model, test = "Hotelling")
+
+# Print MANCOVA results
+cat("Wilks' Lambda Test:\n")
+print(summary_mancova_wilks)
+
+cat("\nPillai's Trace Test:\n")
+print(summary_mancova_pillai)
+
+cat("\nHotelling-Lawley Trace Test:\n")
+print(summary_mancova_hotelling)
 ```
+
+```{r}
+#| label: mancova-posthoc-analysis
+
+# Perform post-hoc univariate ANOVAs
+univariate_results <- lapply(dependent_vars, function(var) {
+  formula <- as.formula(paste(var, "~ StudentGroup + Age"))
+  model <- lm(formula, data = mancova_data)
+  anova_result <- anova(model)
+  tidy_result <- broom::tidy(anova_result)
+  tidy_result$Variable <- var
+  return(tidy_result)
+})
+
+# Combine univariate results
+univariate_summary <- do.call(rbind, univariate_results)
+
+# Create a nice table of univariate results
+univariate_summary %>%
+  kbl(
+    caption = "Univariate ANOVA Results for Civic Virtues Constructs",
+    booktabs = TRUE
+  ) %>%
+  kable_styling()
+
+# Descriptive statistics by group
+group_descriptives <- mancova_data %>%
+  group_by(StudentGroup) %>%
+  summarise(across(
+    all_of(dependent_vars), 
+    list(
+      Mean = ~mean(., na.rm = TRUE), 
+      SD = ~sd(., na.rm = TRUE)
+    )
+  ))
+
+# Create a nice table of descriptive statistics
+group_descriptives %>%
+  kbl(
+    caption = "Descriptive Statistics by Student Group",
+    booktabs = TRUE
+  ) %>%
+  kable_styling()
+```
+
+
+
+
+
 
 
