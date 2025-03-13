@@ -3,7 +3,8 @@
 *.html
 
 # Ignore datasets and large files
-*.csv
+civic-virtues-dataset/*
+!civic-virtues-dataset/civic.clean.csv
 
 # History files
 .Rhistory

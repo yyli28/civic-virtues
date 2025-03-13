@@ -1,0 +1,87 @@
+subject #,Civility Towards Others,Civility Towards Me,Civility Total,Civic Behaviors,Civic Attitudes,CB_CA Total,Wise Reasoning,Need for Cognition,Empathy,Need for Closure,Epistemic Humility,Cultural Competence,Student Status,CC.sa,Gender,Ethnicity,Age
+1001,57,51,108,34,43,77,76,20,29,51,87,34,American,0,Male,Asian,19
+1002,51,55,106,28,42,70,82,20,32,47,101,37,American.sa,23,Female,White,22
+1003,53,62,115,32,46,78,86,24,29,56,83,34,American,0,Female,Asian,18
+1004,52,50,102,36,52,88,92,21,25,77,108,33,International,25,Male,Asian,20
+1005,62,50,112,35,51,86,79,23,33,60,93,35,American,0,Female,White,19
+1006,54,45,99,14,40,54,89,22,32,54,109,39,American,0,Male,White,18
+1007,57,60,117,29,52,81,92,23,28,47,116,40,International,23,Male,Asian,21
+1008,45,29,74,29,48,77,67,22,33,67,71,34,American,0,Female,Asian,18
+1009,51,34,85,19,33,52,61,18,28,69,84,34,American,0,Male,White,20
+1010,56,41,97,25,32,57,58,17,35,52,87,35,American,0,Female,Two or more races,20
+1011,57,61,118,28,55,83,70,16,30,79,75,36,American,0,Female,Black or African American,20
+1012,57,48,105,35,34,69,88,21,33,59,102,26,International,21,Female,White,19
+1013,47,45,92,42,40,82,85,27,25,60,96,35,American,0,Female,White,20
+1014,56,31,87,35,35,70,76,22,31,62,99,34,American,0,Female,Asian,20
+1015,57,57,114,24,48,72,86,26,33,45,92,41,American,0,Female,White,19
+1016,61,48,109,33,52,85,105,29,26,79,114,34,American,0,Female,Asian,19
+1017,54,52,106,18,31,49,79,17,35,41,97,31,American,0,Female,Prefer not to answer,19
+1018,58,52,110,42,56,98,77,25,24,91,115,25,American,0,Female,Asian,20
+1019,46,52,98,30,35,65,26,23,29,61,110,32,American,0,Male,Asian,20
+1020,46,47,93,36,52,88,69,26,24,74,95,29,American.sa,24,Female,Asian,22
+1021,48,44,92,24,32,56,60,19,30,61,94,38,International,17,Female,Asian,22
+1022,49,33,82,20,40,60,88,23,35,34,84,30,International,16,Female,White,19
+1023,56,50,106,30,40,70,86,20,31,36,86,33,American,0,Female,Asian,19
+1024,61,59,120,28,40,68,94,20,30,81,102,32,American,0,Female,Asian,18
+1025,65,65,130,33,54,87,85,23,30,72,103,39,American,0,Female,Black or African American,19
+1026,61,39,100,36,50,86,72,30,33,51,97,38,American,0,Female,Two or more races,19
+1027,55,48,103,29,40,69,71,21,31,56,117,38,International,21,Male,Asian,19
+1028,61,42,103,29,45,74,64,20,36,56,93,33,American,0,Female,Asian,19
+1029,53,43,96,36,56,92,85,19,29,54,89,36,American,0,Female,White,19
+1030,52,52,104,36,56,92,88,24,29,88,81,38,American,0,Male,Asian,19
+1031,47,43,90,18,26,44,72,24,30,57,72,36,American,0,Male,White,20
+1032,44,39,83,13,20,33,66,18,25,61,73,28,American,0,Male,Asian,19
+1033,52,44,96,23,37,60,77,18,28,79,80,35,International,21,Female,Asian,18
+1034,62,51,113,22,56,78,77,18,35,72,100,36,American,0,Female,NA,19
+1035,45,50,95,25,37,62,71,18,28,57,99,29,American,0,Female,Asian,19
+1036,46,44,90,22,40,62,77,23,23,52,106,36,International,20,Prefer not to answer,Prefer not to answer,20
+1037,58,62,120,37,53,90,77,21,22,78,100,28,International,25,Male,Asian,20
+1038,58,49,107,34,49,83,66,23,28,55,107,31,International,18,Male,Asian,19
+1039,60,52,112,41,53,94,90,27,30,70,109,40,American,0,Female,Black or African American,19
+1040,50,47,97,28,49,77,75,24,33,58,71,31,International,18,Female,Asian,20
+1041,45,28,73,26,44,70,71,12,28,70,106,33,International,20,Female,Asian,20
+1042,50,42,92,31,43,74,65,20,32,59,105,38,American.sa,17,Female,Two or more races,20
+1043,42,40,82,25,37,62,75,23,26,70,62,35,American,0,Female,White,19
+1044,52,44,96,38,50,88,51,22,29,61,99,33,American,0,Female,Prefer to self-describe,19
+1045,52,52,104,14,29,43,92,21,26,54,89,35,American,0,Male,Prefer to self-describe,19
+1046,52,51,103,27,37,64,74,18,29,57,77,31,International,20,Male,Asian,20
+1047,64,58,122,23,41,64,89,15,30,47,110,36,American,0,Female,White,20
+1048,62,63,125,23,39,62,78,30,37,45,94,43,International,20,Male,Prefer to self-describe,20
+1049,50,57,107,26,47,73,67,23,29,49,88,31,American,0,Male,White,20
+1050,55,52,107,28,48,76,88,25,34,47,98,34,American,0,Female,Asian,18
+1051,57,44,101,21,43,64,60,28,26,52,101,30,American,0,Female,Asian,19
+1052,45,55,100,21,35,56,75,23,30,65,76,27,American,0,Male,Asian,21
+1053,65,65,130,42,50,92,85,20,26,72,102,33,American,0,Prefer not to answer,Prefer not to answer,19
+1054,39,39,78,30,44,74,84,18,24,66,78,27,American,0,Female,White,20
+1055,62,45,107,40,53,93,76,26,32,40,104,39,American,0,Female,White,19
+1056,51,49,100,22,43,65,79,19,29,44,92,37,American,0,Male,White,19
+1057,61,51,112,29,52,81,77,24,35,30,119,39,American,0,Female,Black or African American,19
+1058,50,46,96,18,32,50,71,18,24,63,91,27,American,0,Female,White,19
+1059,45,48,93,28,56,84,73,15,24,45,102,28,American,0,Female,White,19
+1060,52,55,107,33,56,89,65,15,30,62,87,33,American,0,Female,Black or African American,19
+1061,61,61,122,32,44,76,73,24,33,69,89,38,International,16,Male,Asian,19
+1062,49,42,91,19,43,62,58,23,30,54,91,41,American,0,Male,Two or more races,19
+1063,48,52,100,23,39,62,56,19,31,60,99,35,American.sa,18,Female,Not specified,20
+1064,59,46,105,33,53,86,93,21,28,52,103,39,American,0,Female,White,19
+1065,46,45,91,23,37,60,79,21,31,43,98,36,American,0,Male,Asian,20
+1066,64,64,128,36,36,72,76,27,29,67,97,32,International,25,Female,White,19
+1067,52,52,104,36,49,85,79,24,28,52,95,38,American.sa,22,Female,Asian,22
+1068,43,39,82,32,55,87,62,27,30,53,102,37,American,0,Male,White,19
+1069,65,33,98,26,41,67,98,17,36,33,83,30,International,18,Female,Asian,18
+1070,62,52,114,24,40,64,91,18,32,66,99,31,American,0,Male,Asian,19
+1071,62,35,97,33,50,83,97,24,34,73,113,38,American,0,Female,Two or more races,20
+1072,64,57,121,33,50,83,90,30,30,36,94,40,International,20,Female,Asian,22
+1073,57,50,107,36,55,91,81,27,33,52,96,41,International,20,Female,White,18
+1074,51,41,92,28,40,68,73,23,25,58,83,36,International,15,Prefer not to answer,Prefer not to answer,19
+1075,48,42,90,27,49,76,82,27,26,53,95,39,International,23,Female,Two or more races,22
+1076,36,39,75,23,30,53,63,22,23,49,73,27,International,24,Male,White,19
+1077,46,49,95,17,33,50,74,17,26,51,113,37,International,20,Female,White,20
+1078,47,42,89,14,31,45,65,18,24,56,68,19,International,18,Male,Asian,21
+1079,45,45,90,24,36,60,73,15,26,61,71,31,International,25,Female,Asian,20
+1080,47,40,87,21,31,52,82,18,33,60,94,34,International,18,Male,Asian,21
+1081,55,53,108,35,36,71,57,23,28,59,85,29,International,25,Male,Prefer to self-describe,20
+1082,65,65,130,42,56,98,105,18,30,54,122,41,International,25,Male,White,19
+1084,45,38,83,23,36,59,67,21,22,60,89,33,American,0,Male,Asian,20
+1085,55,46,101,38,48,86,76,26,25,63,103,31,International,20,Male,Asian,20
+1086,56,57,113,29,43,72,60,20,30,49,93,35,International,25,Female,Asian,19
+1087,63,59,122,33,53,86,98,27,36,38,104,38,American,0,Male,Two or more races,19
