@@ -14,7 +14,7 @@ author:
         region: IL
         country: USA
         postal-code: 60637
-abstract: This study investigated civic virtues among international and American undergraduate students to examine potential differences in psychological constructs associated with civic development. we compared 86 students from a single university across multiple measures of civic virtues, including relational civility, civic attitudes and behaviors, empathy, epistemic humility, and cultural competence. Independent samples t-tests and one-way analyses of variance found no statistically significant differences between international and American students across these constructs. The findings suggest that the contemporary university experience may promote comparable civic development trajectories, regardless of students' international status. 
+abstract: The study investigated civic virtues among international and American undergraduate students to examine potential differences in psychological constructs associated with civic development. We compared 86 students from a single university across multiple measures of civic virtues, including relational civility, civic attitudes and behaviors, empathy, epistemic humility, and cultural competence. Independent samples t-tests and one-way analyses of variance found no statistically significant differences between international and American students across these constructs. The findings suggest that the contemporary university experience may promote comparable civic development trajectories, regardless of students' international status. 
 keywords: [civic virtues, empathy, wisdom, civility, international studies]
 # If true, tables and figures are mingled with the text instead of listed at the end of the document.
 floatsintext: true
@@ -159,7 +159,7 @@ gender_summary <- demo_data %>%
   pivot_wider(names_from = `Student Status`, values_from = Value) %>%
   rename(Level = Gender) %>%
   mutate(Label = "Gender") %>%
-  arrange(Level)  # Ensure Gender subcategories are ordered
+  arrange(Level)  
 
 # Ensure "Gender" appears only once in the first column
 gender_summary$Label[duplicated(gender_summary$Label)] <- ""
@@ -194,19 +194,19 @@ demographic_table %>%
   kable_styling(full_width = FALSE, bootstrap_options = c("striped", "hover"))
 ```
 
-A survey was adapted from Boulware et al. (2023). Participants were recruited through the Psychology Department’s SONA system during the winter quarter in 2025 as well as through campus advertisements. The total sample consisted of `r nrow(civic_data)` participants, with `r sum(civic_data[["Student Status"]] == "International")` international students and `r sum(civic_data[["Student Status"]] %in% c("American", "American.sa"))` domestic students, representing a diverse composition of student backgrounds as detailed in @tbl-demographics.
+Participants were recruited through the Psychology Department’s SONA system during the winter quarter in 2025 as well as through campus advertisements. The total sample consisted of `r nrow(civic_data)` participants, with `r sum(civic_data[["Student Status"]] == "International")` international students and `r sum(civic_data[["Student Status"]] %in% c("American", "American.sa"))` domestic students, representing a diverse composition of student backgrounds as detailed in @tbl-demographics.
 
 ## Measures
 
-A survey was adapted from Boulware et al. (2023), and distributed through the Psychology Department’s research participant recruitment system during the winter quarter in 2025.
+A survey was adapted from [@boulwareStrangerStrangeLand2023], and distributed through the Psychology Department’s research participant recruitment system during the winter quarter in 2025.
 
 ### Civic Virtues
 
-We will use two measures to assess civic virtues. The first is Doolittle and Faul’s (2013) 14-item Civic Engagement Scale. It includes the 8 civic attitude subscale (e.g., “I feel responsible for my community”, 1 = disagree, and 7 = agree) and 6 civic behavior items (e.g., “I am involved in structured volunteer position(s) in the community”, 1 = never, and 7 = always). The second one is based on the Workplace Relational Civility scale, tailored for student population. It includes 13 items assessing civility towards others and 13 items assessing civility experienced by participants (Di Fabio & Gori, 2016). Sample items include “I was able to express my values and my beliefs calmly to others” and “Others were able to express their point of view without being disrespectful toward me” (1= not at all, and 5 = a great deal).
+We will use two measures to assess civic virtues. The first is @doolittleCivicEngagementScale2013 14-item Civic Engagement Scale. It includes the 8 civic attitude subscale (e.g., “I feel responsible for my community”, 1 = *disagree*, and 7 = *agree*) and 6 civic behavior items (e.g., “I am involved in structured volunteer position(s) in the community”, 1 = *never*, and 7 = *always*). The second one is based on the Workplace Relational Civility scale, tailored for student population. It includes 13 items assessing civility towards others and 13 items assessing civility experienced by participants [@difabioAssessingWorkplaceRelational2016]. Sample items include “I was able to express my values and my beliefs calmly to others” and “Others were able to express their point of view without being disrespectful toward me” (1 = *not at all*, and 5 = *a great deal*).
 
 ### Other constructs related to civic virtues
 
-We will use a scale developed at the Center for Practical Wisdom at the University of Chicago to assess epistemic humility (Hoeckner, 2011, personal communication). Sample items include “I accept that many good and bad things happening to me are beyond my control” (1 = strongly disagree, and 8 = strongly agree). We will use the 8-item Empathy Quotient to measure empathy towards others [@loewenEightitemFormEmpathy]. Sample items include “I find it easy to put myself in somebody else’s shoes” (1 = never, and 5 = always). We will use the 6-item NFC short form scale to measure the tendency to engage in cognitive effort [@linsdeholandacoelhoVeryEfficientAssessment2020]. Sample questions include “I would prefer complex to simple problems” (1 = extremely uncharacteristic, and 5 = extremely characteristic). We will measure cultural competency based on a set of questions provided by the Study Abroad program at the University of Chicago. For international students, we will have questions asking them to report their first language, English proficiency (indicated by the Test of English as a Foreign Language or a self-report scale), and duration of their residence in the United States. American students will indicate whether they have studied abroad.
+We will use a scale developed at the Center for Practical Wisdom at the University of Chicago to assess epistemic humility (Hoeckner, 2011, personal communication). Sample items include “I accept that many good and bad things happening to me are beyond my control” (1 = *strongly disagree*, and 8 = *strongly agree*). We will use the 8-item Empathy Quotient to measure empathy towards others [@loewenEightitemFormEmpathy]. Sample items include “I find it easy to put myself in somebody else’s shoes” (1 = *never*, and 5 = *always*). We will use the 6-item NFC short form scale to measure the tendency to engage in cognitive effort [@linsdeholandacoelhoVeryEfficientAssessment2020]. Sample questions include “I would prefer complex to simple problems” (1 = *extremely uncharacteristic*, and 5 = *extremely characteristic*). We will measure cultural competency based on a set of questions provided by the Study Abroad program at the University of Chicago. For international students, we will have questions asking them to report their first language, English proficiency (indicated by the Test of English as a Foreign Language or a self-report scale), and duration of their residence in the United States. American students will indicate whether they have studied abroad.
 
 ## Data Analysis
 
@@ -218,7 +218,6 @@ To test the first hypothesis, independent t-tests compared international and Ame
 
 ```{r}
 #| label: prepare-descriptive-data
-#| code-summary: "Prepare data for descriptive statistics"
 
 # Select only numeric columns for analysis
 desc_numeric_data <- civic_data %>%
@@ -227,7 +226,6 @@ desc_numeric_data <- civic_data %>%
 
 ```{r}
 #| label: summary-function
-#| code-summary: "Basic summary of variables"
 #| code-fold: true
 #| include: false
 
@@ -239,7 +237,7 @@ summary(desc_numeric_data)
 #| label: tbl-descriptive-stats
 #| tbl-cap: Descriptive Statistics of Civic Virtues Measures
 
-# Calculate descriptive statistics
+# Calculate descriptive statistics and make tables 
 desc_stats <- desc_numeric_data %>%
   pivot_longer(everything(), names_to = "Variable", values_to = "Value") %>%
   group_by(Variable) %>%
@@ -371,8 +369,8 @@ corr_table <- corr_matrix_formatted %>%
 ```{r}
 #| label: tbl-correlations
 #| tbl-cap: Bivariate Correlations among Civic Virtues Constructs
-# Generate correlation table 
 
+# Generate correlation table 
 corr_table %>%
 kbl(format = "latex",
     booktabs = TRUE) %>%
@@ -466,6 +464,7 @@ t_test_results <- map_dfr(
 #| label: tbl-t-tests
 #| tbl-cap: Comparison of Civic Virtues Constructs between American and International Students
 
+# Generate a table to report t-tests results
 t_test_results %>%
   kbl(
     booktabs = TRUE,
@@ -518,6 +517,7 @@ ggplot(plot_data, aes(x = StudentGroup, y = Value, fill = StudentGroup)) +
   # Facet wrap to create separate panels
   facet_wrap(~ Variable, scales = "free_y", ncol = 3, labeller = labeller(Variable = custom_labels)) +
   
+  # Choose a color pallet 
   scale_fill_manual(values = c("American" = "#FFB6C1", "International" = "#8FBC8F")) +
   
   
@@ -582,7 +582,8 @@ ggplot(civic_data_filtered, aes(x = `Student Status`, y = Score, fill = `Student
   geom_boxplot(alpha = 0.5, color = "black", outlier.shape = NA, width = 0.6) +  
   geom_jitter(width = 0.15, alpha = 0.5, size = 1.8, aes(color = `Student Status`)) +
   stat_summary(fun = mean, geom = "point", shape = 4, size = 4, color = "black", stroke = 1.2) + 
-  facet_wrap(~ Measure, scales = "free_y") +  # ✅ NOW WORKS! Separate y-axis per variable
+  # Separate y-axis per variable
+  facet_wrap(~ Measure, scales = "free_y") +                              
   scale_fill_manual(values = c("American" = "#1b9e77", "International" = "#d95f02")) +
   scale_color_manual(values = c("American" = "#1b9e77", "International" = "#d95f02")) +
   labs(
@@ -673,7 +674,6 @@ anova_data <- civic_data %>%
 
 # Perform individual ANOVAs for each dependent variable
 anova_results <- lapply(dependent_vars, function(var) {
-  # Use backticks to handle column names with spaces
   formula <- as.formula(paste("`", var, "` ~ StudentGroup", sep = ""))
   
   # Perform one-way ANOVA
@@ -706,7 +706,8 @@ anova_summary$Significance <- ifelse(anova_summary$p_value < 0.001, "***",
                                      ifelse(anova_summary$p_value < 0.01, "**",
                                             ifelse(anova_summary$p_value < 0.05, "*", "ns")))
 
-# Create a nice table of ANOVA results
+# Create a table of ANOVA results
+# I did not include this table because I did not get significant results
 anova_summary %>%
   kbl(
     caption = "One-way ANOVA Results for Civic Virtues Constructs",
@@ -723,7 +724,7 @@ anova_summary %>%
 
 # Perform Tukey's HSD post-hoc test for each significant variable
 posthoc_results <- lapply(dependent_vars, function(var) {
-  # Use backticks to handle column names with spaces
+
   formula <- as.formula(paste("`", var, "` ~ StudentGroup", sep = ""))
   
   # Perform Tukey's HSD test
@@ -756,8 +757,8 @@ A series of one-way analyses of variance (ANOVAs) were conducted to examine pote
 # Discussion
 The current study aimed to explore whether international students, due to their unique experiences in a foreign country, exhibit similar or differing levels of civic virtues and related psychological constructs compared to their American peers.
 Independent samples t-tests comparing American and international students across key civic virtues revealed no significant differences between the groups on measures of relational civility, civic behaviors and attitudes, wise reasoning, need for cognition, empathy, need for closure, epistemic humility, and cultural competence. These findings suggest that international and American college students in this sample exhibited comparable levels of civic-mindedness and associated psychological characteristics.
-The observed similarities in civic virtues among student groups could be attributed to several factors. First, the shared experience of the college admissions process and campus life may create a common context for civic development. Engaging in coursework, extracurricular activities, and community service opportunities provided by the university may equally contribute to students' civic growth, regardless of their international background [@zarrettRoleOrganizedActivities2021]. Second, the self-selection bias inherent in college admissions might result in a student body already predisposed to civic-mindedness, leading to more homogeneous outcomes. 
-However, several limitations should be considered when interpreting the results. The sample size, particularly for Amerian students with study abroad experiences, was relatively small, and participants were drawn from a single university. Future research should also employ longitudinal designs to track civic development over time and explore potential mediators and moderators of the relationship between international experiences and civic outcomes. Additionally, the broad categorization of international and American students may obscure important within-group variability. Future studies should consider factors such as English language proficiency and duration of their residence in the United States to better understand the nuances of international students' civic development.
+The observed similarities in civic virtues among student groups could be attributed to factors such as  shared experience of the college admissions process and campus life, which may create a common context for civic development. Engaging in coursework, extracurricular activities, and community service opportunities provided by the university may equally contribute to students' civic growth, regardless of their international background [@zarrettRoleOrganizedActivities2021]. 
+Several limitations should be considered when interpreting the results. The sample size, particularly for American students with study abroad experiences, was relatively small, and participants were drawn from a single university. Future research should also employ longitudinal designs to track civic development over time and explore potential mediators and moderators of the relationship between international experiences and civic outcomes. Additionally, the broad categorization of international and American students may obscure important within-group variability. Future studies should consider factors such as English language proficiency and duration of their residence in the United States to better understand the nuances of international students' civic development.
 
 \clearpage
 
